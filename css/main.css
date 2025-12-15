@@ -1,0 +1,318 @@
+/* Main application styles for Slim Graph */
+/* Matching Slim Gantt design system */
+
+/* ==================== */
+/* Theme Color System   */
+/* ==================== */
+
+:root {
+    /* Surfaces */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-tertiary: #f3f4f6;
+    --bg-canvas: #f5f5f5;
+
+    /* Text */
+    --text-primary: #111827;
+    --text-secondary: #374151;
+    --text-tertiary: #4b5563;
+    --text-muted: #6b7280;
+    --text-faint: #9ca3af;
+
+    /* Borders */
+    --border-primary: #e5e7eb;
+    --border-secondary: #d1d5db;
+    --border-strong: #888888;
+
+    /* Interactive */
+    --accent-primary: #3b82f6;
+    --accent-hover: #2563eb;
+
+    /* Scrollbar */
+    --scrollbar-track: #f1f1f1;
+    --scrollbar-thumb: #888888;
+    --scrollbar-thumb-hover: #555555;
+
+    /* Status */
+    --status-error-bg: #fef2f2;
+    --status-error-border: #fecaca;
+    --status-warning-bg: #fffbeb;
+    --status-warning-border: #fde68a;
+
+    /* Canvas/Graph */
+    --node-bg: #ffffff;
+    --node-border: #333333;
+    --edge-color: #333333;
+
+    /* Shadows */
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    /* Surfaces */
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
+    --bg-tertiary: #374151;
+    --bg-canvas: #1e293b;
+
+    /* Text */
+    --text-primary: #f9fafb;
+    --text-secondary: #e5e7eb;
+    --text-tertiary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-faint: #6b7280;
+
+    /* Borders */
+    --border-primary: #374151;
+    --border-secondary: #4b5563;
+    --border-strong: #6b7280;
+
+    /* Interactive */
+    --accent-primary: #60a5fa;
+    --accent-hover: #3b82f6;
+
+    /* Scrollbar */
+    --scrollbar-track: #374151;
+    --scrollbar-thumb: #6b7280;
+    --scrollbar-thumb-hover: #9ca3af;
+
+    /* Status */
+    --status-error-bg: #450a0a;
+    --status-error-border: #991b1b;
+    --status-warning-bg: #451a03;
+    --status-warning-border: #92400e;
+
+    /* Canvas/Graph */
+    --node-bg: #374151;
+    --node-border: #9ca3af;
+    --edge-color: #9ca3af;
+
+    /* Shadows */
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Theme transition for smooth switching */
+:root {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ==================== */
+/* Reset and base styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Remove spinner from number inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Graph node styles */
+.graph-node {
+    transition: opacity 0.2s;
+}
+
+.graph-node:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* Animation for processing state */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Ensure full height for the app */
+#root {
+    height: 100vh;
+}
+
+/* Modal overlay styles */
+.modal-overlay {
+    backdrop-filter: blur(4px);
+}
+
+/* Resource/Group color coding */
+.resource-color-1 { background-color: #3B82F6; } /* Blue */
+.resource-color-2 { background-color: #10B981; } /* Green */
+.resource-color-3 { background-color: #F59E0B; } /* Orange */
+.resource-color-4 { background-color: #8B5CF6; } /* Purple */
+.resource-color-5 { background-color: #EC4899; } /* Pink */
+.resource-color-6 { background-color: #14B8A6; } /* Teal */
+.resource-color-7 { background-color: #F97316; } /* Deep Orange */
+.resource-color-8 { background-color: #06B6D4; } /* Cyan */
+
+/* Empty state */
+.empty-state {
+    color: var(--text-faint);
+}
+
+/* Tooltip */
+.graph-tooltip {
+    position: fixed;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-secondary);
+    border-radius: 6px;
+    padding: 8px 12px;
+    box-shadow: 0 4px 6px -1px var(--shadow-color);
+    font-size: 12px;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.graph-tooltip-header {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.graph-tooltip-content {
+    color: var(--text-tertiary);
+}
+
+/* Button states */
+.btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Loading spinner */
+.spinner {
+    border: 2px solid var(--bg-tertiary);
+    border-top: 2px solid var(--accent-primary);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ==================== */
+/* Accessibility Styles */
+/* ==================== */
+
+/* Focus indicators for all interactive elements */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+/* High contrast focus for icon buttons */
+.icon-button:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--accent-primary);
+    color: white;
+    padding: 8px 16px;
+    z-index: 100;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Screen reader only text (visually hidden but accessible) */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    button:focus-visible {
+        outline: 3px solid currentColor;
+    }
+}
+
+/* Link mode indicator for keyboard users */
+.link-mode-active {
+    position: relative;
+}
+
+.link-mode-active::after {
+    content: "Press Enter to select target, Escape to cancel";
+    position: absolute;
+    bottom: -24px;
+    left: 0;
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}

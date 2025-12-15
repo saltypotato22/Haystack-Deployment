@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haystack AI - Network Diagram Visualizer</title>
+
+    <!-- External Dependencies (pinned versions for security/stability)
+         TODO: Add Subresource Integrity (SRI) hashes for enhanced security
+         See: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
+         Note: Tailwind CDN (cdn.tailwindcss.com) doesn't support SRI as it's a JIT compiler -->
+    <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+
+    <!-- Early theme detection (prevents flash of wrong theme) -->
+    <script>
+        (function() {
+            var saved = localStorage.getItem('haystack-theme');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var theme = saved || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') document.documentElement.classList.add('dark');
+        })();
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Root element for React app -->
+    <div id="root" role="application" aria-label="Slim Graph Network Diagram Visualizer"></div>
+
+    <!-- Screen reader announcements -->
+    <div id="a11y-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Initialize global namespace -->
+    <script>
+        window.GraphApp = {
+            components: {},
+            utils: {},
+            core: {},
+            data: {},
+            exports: {},
+            config: {}
+        };
+    </script>
+
+    <!-- Load modules in dependency order -->
+    <!-- 1. Icons and basic components -->
+    <script src="js/components/icons.js"></script>
+    <script src="js/components/errorBoundary.js"></script>
+
+    <!-- 2. Utilities -->
+    <script src="js/utils/utils.js"></script>
+
+    <!-- 3. Configuration -->
+    <script src="js/config/labels.js"></script>
+    <script src="js/config/constants.js"></script>
+    <script src="js/config/theme.js"></script>
+
+    <!-- 4. Data -->
+    <script src="js/data/sample-data.js"></script>
+
+    <!-- 5. Core modules -->
+    <script src="js/core/excel-handler.js"></script>
+    <script src="js/core/exports.js"></script>
+    <script src="js/core/skill-loader.js"></script>
+    <script src="js/core/evaluation-engine.js"></script>
+
+    <!-- 6. UI Components -->
+    <script src="js/components/grid-display.js"></script>
+    <script src="js/components/evaluation-ui.js"></script>
+
+    <!-- 7. Commands (undo/redo) -->
+    <script src="js/commands/snapshotHistory.js"></script>
+
+    <!-- 8. Main App (must be loaded last) -->
+    <script src="js/app.js?v=1"></script>
+</body>
+</html>
